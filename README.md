@@ -1,3 +1,11 @@
+# Identitas Anggota Kelompok 3
+| Nama | NRP |
+|-----------|-----------|
+| **Daniel Adhitthana** | 5025231097 |
+| **Glenn Muhammad Rooney** | 5025231112 |
+| **Filbert Hainsly Martin** | 5025231256 |
+| **Valensio Arvin Putra Setiawan** | 5025231273 |
+
 # Penjelasan Algoritma CYK dan Program
 
 ## Penjelasan Mengenai Algoritma CYK dan Cara Kerjanya
