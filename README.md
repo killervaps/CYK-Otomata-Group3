@@ -76,7 +76,7 @@ Algoritma CYK menggunakan pendekatan **bottom-up** dengan membangun tabel dua di
 
 ---
 
-## Contoh Input dan Output
+## Contoh Input dan Output (Not Accepted)
 ### String Input
 String input: `["a", "a", "a", "b", "c"]` (panjang n = 5)
 
@@ -241,4 +241,101 @@ Berikut adalah tabel CYK yang dihasilkan:
 - Output program:
   ```
   Not accepted by grammar
+  ```
+  
+---
+
+## Contoh Input dan Output (Accepted)
+### String Input
+String input: `["a", "b", "c"]` (panjang n = 3)
+
+Tata bahasa yang digunakan:
+- S → A T
+- T → B C
+- A → a
+- B → b
+- C → c
+
+---
+
+### Langkah 1: Inisialisasi Tabel
+Tabel awalnya kosong di semua sel.
+
+
+|   | 0 | 1 | 2 |
+|---|---|---|---|
+| 0 | {} | {} | {} |
+| 1 |    | {} | {} |
+| 2 |    |    | {} |
+
+
+---
+
+### Langkah 2: Mengisi Diagonal (Panjang Substring = 1)
+Mengisi sel-sel diagonal (i = j) dengan non-terminal yang menghasilkan simbol terminal pada posisi tersebut.
+
+- Pos 0 ("a"): A → a → tabel[0][0] = {'A'}
+- Pos 1 ("b"): B → b → tabel[1][1] = {'B'}
+- Pos 2 ("c"): C → c → tabel[2][2] = {'C'}
+
+
+|   | 0   | 1   | 2   |
+|---|---|---|---|
+| 0 | {A} | {}  | {}  |
+| 1 |     | {B} | {}  |
+| 2 |     |     | {C} |
+
+
+---
+
+### Langkah 3: Mengisi Tabel untuk Panjang 2
+Periksa substring berukuran 2 dan kombinasi aturan produksi.
+
+- **i=0, j=1 ("a b")**: 
+  - Pemisahan: tabel[0][0] = {'A'}, tabel[1][1] = {'B'} → Tidak ada aturan X → A B → tabel[0][1] = {}
+- **i=1, j=2 ("b c")**: 
+  - Pemisahan: tabel[1][1] = {'B'}, tabel[2][2] = {'C'} → Aturan T → B C → tabel[1][2] = {'T'}
+
+
+|   | 0   | 1   | 2   |
+|---|---|---|---|
+| 0 | {A} | {}  | {}  |
+| 1 |     | {B} | {T} |
+| 2 |     |     | {C} |
+
+
+---
+
+### Langkah 4: Mengisi Tabel untuk Panjang 3
+Periksa substring berukuran 3.
+
+- **i=0, j=2 ("a b c")**: 
+  - k=0: tabel[0][0] = {'A'}, tabel[1][2] = {'T'} → Aturan S → A T → tabel[0][2] = {'S'}
+  - k=1: tabel[0][1] = {}, tabel[2][2] = {'C'} → Kosong
+
+
+|   | 0   | 1   | 2   |
+|---|---|---|---|
+| 0 | {A} | {}  | {S} |
+| 1 |     | {B} | {T} |
+| 2 |     |     | {C} |
+
+
+---
+
+### Tabel CYK Akhir
+Berikut adalah tabel CYK yang dihasilkan:
+
+|   | 0   | 1   | 2   |
+|---|---|---|---|
+| **0** | {'A'} | {}    | {'S'} |
+| **1** |       | {'B'} | {'T'} |
+| **2** |       |       | {'C'} |
+
+### Output
+- `tabel[0][2]` (sel yang mencakup seluruh string "a b c") mengandung 'S'.
+- Hasil dari `cyk_parse`: `True`.
+- Output program:
+  ```
+  Accepted by grammar
   ```
